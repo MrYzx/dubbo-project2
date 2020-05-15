@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo
+http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 配置消费服务的监控中心，自动获取的方式-->
+    <dubbo:monitor protocol="registry"></dubbo:monitor>
+    <!-- 应用配置，不要与提供方相同 -->
+    <dubbo:application name="dubbo-consumer2"/>
+    <!-- 注册中心配置，使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" timeout="60000" />
+    <!--关闭服务消费方所有服务的启动检查。dubbo缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止Spring初始化完成。-->
+    <dubbo:consumer check="false" />
+    <!-- 配置 dubbo 的使用协议-->
+    <dubbo:protocol name="dubbo" port="20881"/>
+    <!-- 使用注解方式创建远程服务代理-->
+    <!--<dubbo:annotation package="com.practice.springboot.dubbo.consumer"/>-->
+    <!--配置消费者，与服务声明接口类型一致-->
+    <!--
+        loadbalance="random"  设置负载均衡机制
+        url="dubbo://localhost:20881"  设置直连方式连接服务提供者
+        version="yzx"        设置版本
+        timeout="2000"       设置超时时间
+        mock="return 123456...  假设在调用服务的时候，远程服务没有启动，或者各种网络异常了，那远程服务会把这个mock配置的值返回，
+                                也就是会返回123456...
+
+    <dubbo:reference id="userService" loadbalance="random"  interface="com.yzx.dubbo.api2.server.UserService" version="yzx" timeout="2000"/>-->
+
+    <dubbo:reference id="userService" mock="true" interface="com.yzx.dubbo.api2.server.UserService" version="yzx" timeout="2000"/>
+</beans>

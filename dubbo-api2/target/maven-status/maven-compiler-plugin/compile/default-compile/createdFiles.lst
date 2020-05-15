@@ -1,0 +1,3 @@
+com\yzx\dubbo\api2\DubboApi1Application.class
+com\yzx\dubbo\api2\server\UserServiceMock.class
+com\yzx\dubbo\api2\server\UserService.class
